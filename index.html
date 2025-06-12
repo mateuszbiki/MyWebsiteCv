@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator CV</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        form div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="file"], textarea { width: calc(100% - 20px); padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        textarea { min-height: 150px; resize: vertical; }
+        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        .results { margin-top: 30px; padding: 20px; border: 1px dashed #ccc; background-color: #f9f9f9; border-radius: 4px; }
+        .cv-preview { margin-top: 20px; border: 1px solid #eee; padding: 15px; background-color: #fff; white-space: pre-wrap; font-size: 0.9em; max-height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>Inteligentny Generator CV</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="cv_file">Wgraj swoje CV (PDF):</label>
+            <input type="file" id="cv_file" name="cv_file" accept=".pdf" required>
+        </div>
+        <div>
+            <label for="job_description">Wklej opis oferty pracy:</label>
+            <textarea id="job_description" name="job_description" placeholder="Wklej tutaj pełny opis oferty pracy..." required></textarea>
+        </div>
+        <button type="submit">Generuj dopasowanie CV</button>
+    </form>
+
+    {% if results %}
+        <div class="results">
+            <h2>Dopasowane fragmenty:</h2>
+            <ul>
+                {% for phrase in results %}
+                    <li>{{ phrase }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="cv-preview">
+            <h3>Pełny tekst CV (dla podglądu):</h3>
+            <p>{{ cv_text }}</p>
+        </div>
+    {% endif %}
+</body>
+</html>
